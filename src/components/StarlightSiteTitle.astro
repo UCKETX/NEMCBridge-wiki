@@ -1,0 +1,32 @@
+---
+import { withBase } from '../lib/site-path.mjs';
+---
+
+<a href={withBase('/')} class="site-brand" aria-label="NEMCBridge 官网首页">
+  <img src={withBase('/site/assets/favicon.svg')} alt="" width="28" height="28" />
+  <span>NEMC<b>Bridge</b></span>
+</a>
+
+<style>
+  .site-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sl-color-white);
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site-brand img {
+    image-rendering: pixelated;
+    border-radius: 4px;
+  }
+
+  .site-brand b {
+    color: var(--sl-color-accent-high);
+    font-weight: 800;
+  }
+</style>

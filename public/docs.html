@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>正在跳转到 NEMCBridge 文档…</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="wiki/" />
+    <meta http-equiv="refresh" content="1;url=wiki/" />
+    <script>
+      (function () {
+        var hashMap = {
+          '#start': '/wiki/quick-start/',
+          '#quickstart': '/wiki/quick-start/',
+          '#quick-start': '/wiki/quick-start/',
+          '#download': '/#download',
+          '#downloads': '/#download',
+          '#compat': '/wiki/resource-packs-and-compatibility/#二bds-协议兼容表',
+          '#compatibility': '/wiki/resource-packs-and-compatibility/#二bds-协议兼容表',
+          '#resources': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+          '#appearance': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+          '#resource-packs': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+          '#faq': '/wiki/troubleshooting-and-logs/#按现象快速排查',
+          '#troubleshooting': '/wiki/troubleshooting-and-logs/#按现象快速排查',
+          '#changelog': '/wiki/releases-and-downloads/#近期关键版本脉络'
+        };
+        var rawHash = window.location.hash || '';
+        var decodedHash = '';
+        try {
+          decodedHash = decodeURIComponent(rawHash).toLowerCase();
+        } catch (e) {
+          decodedHash = rawHash.toLowerCase();
+        }
+        var target = hashMap[decodedHash] || ('/wiki/' + rawHash);
+        window.location.replace('./' + target.slice(1));
+      })();
+    </script>
+  </head>
+  <body data-pagefind-ignore="all">
+    <p>文档已迁移至 <a href="wiki/">/wiki/</a>，正在自动跳转…</p>
+  </body>
+</html>

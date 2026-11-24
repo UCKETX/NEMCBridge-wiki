@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const distDir = path.resolve('dist');
+const origin = 'https://wiki-build.invalid';
+const base = (process.env.SITE_BASE || '/').replace(/\/$/, '');
 
 if (!fs.existsSync(distDir)) {
   console.error('ERROR: dist/ directory not found. Run `npm run build` first.');
@@ -46,41 +48,26 @@ let checkedCount = 0;
 for (const file of htmlFiles) {
   const route = fileToRoute(file);
   const html = fs.readFileSync(file, 'utf8');
-  for (const match of html.matchAll(/\bhref="([^"]+)"/g)) {
-    const rawHref = match[1];
-    if (
-      !rawHref ||
-      rawHref.startsWith('http://') ||
-      rawHref.startsWith('https://') ||
-      rawHref.startsWith('mailto:') ||
-      rawHref.startsWith('tel:') ||
-      rawHref.startsWith('javascript:')
-    ) {
+  for (const [, rawHref] of html.matchAll(/\b(?:href|src|srcset)="([^"]+)"/g)) {
+    if (!rawHref || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(rawHref)) continue;
+    checkedCount++;
+    const url = new URL(rawHref, origin + base + route);
+    if (base && url.pathname !== base && !url.pathname.startsWith(base + '/')) {
+      errors.push(`${route} -> outside deployment base: ${rawHref}`);
       continue;
     }
+    const targetRoute = decodeURIComponent(url.pathname.slice(base.length)) || '/';
+    const hash = decodeURIComponent(url.hash.slice(1));
+    const normalized = targetRoute.endsWith('/') || path.posix.extname(targetRoute)
+      ? targetRoute : `${targetRoute}/`;
 
-    checkedCount++;
-    const [rawPath, rawHash] = rawHref.split('#');
-    const hash = rawHash ? decodeURIComponent(rawHash) : '';
-
-    let targetRoute = route;
-    if (rawPath) {
-      const resolved = rawPath.startsWith('/')
-        ? rawPath
-        : path.posix.resolve(route, rawPath);
-      targetRoute = resolved;
-    }
-
-    // Static assets (CSS/JS/SVG/XML/favicon/etc.)
-    if (targetRoute !== '/' && path.posix.extname(targetRoute)) {
-      const assetPath = path.join(distDir, targetRoute.replace(/^\//, ''));
-      if (!fs.existsSync(assetPath)) {
+    if (!idsByRoute.has(normalized) && path.posix.extname(targetRoute)) {
+      if (!fs.existsSync(path.join(distDir, targetRoute))) {
         errors.push(`${route} -> missing asset: ${rawHref}`);
       }
       continue;
     }
 
-    const normalized = targetRoute.endsWith('/') ? targetRoute : `${targetRoute}/`;
     const targetIds = idsByRoute.get(normalized);
     if (!targetIds) {
       errors.push(`${route} -> broken internal route: ${rawHref}`);

@@ -1,0 +1,132 @@
+---
+import { withBase } from '../lib/site-path.mjs';
+// 与官网首页导航（public/site/style.css 的 .nav）保持同一结构与尺寸：
+// 品牌 + 首页/文档 居左，QQ 群 + GitHub + 下载 居右；文档额外保留紧凑搜索。
+import Search from '@astrojs/starlight/components/Search.astro';
+import SiteTitle from './StarlightSiteTitle.astro';
+---
+
+<div class="nb-nav">
+  <SiteTitle />
+  <nav class="nb-links" aria-label="主导航">
+    <a href={withBase('/')}>首页</a>
+    <a href={withBase('/wiki/')} aria-current="page">文档</a>
+  </nav>
+  <div class="nb-actions">
+    <div class="nb-search print:hidden"><Search /></div>
+    <a class="nb-icon nb-desktop" href="https://qm.qq.com/q/GMQQF4zSyy" target="_blank" rel="noopener" aria-label="加入 QQ 群" title="加入 QQ 群">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21.395 15.035a40 40 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a39 39 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.189 1.6.18 7.14.389 7.483-.189.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.836 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673"></path></svg>
+    </a>
+    <a class="nb-icon nb-desktop" href="https://github.com/UCKETX/NEMCBridge" target="_blank" rel="noopener" aria-label="GitHub 仓库">
+      <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+    </a>
+    <a class="nb-btn nb-desktop" href={withBase('/#download')}>下载</a>
+  </div>
+</div>
+
+<style>
+  .nb-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+  }
+
+  .nb-links {
+    display: flex;
+    gap: 4px;
+    margin-right: auto;
+  }
+
+  .nb-links a {
+    color: #a69fbb;
+    font-size: 14.5px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nb-links a:hover {
+    color: var(--sl-color-white);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .nb-links a[aria-current='page'] {
+    color: var(--sl-color-white);
+    background: rgba(168, 85, 247, 0.16);
+  }
+
+  .nb-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .nb-desktop {
+    display: none;
+  }
+
+  .nb-icon {
+    padding: 8px;
+    color: #a69fbb;
+    border-radius: 8px;
+    transition: color 0.2s;
+  }
+
+  .nb-icon:hover {
+    color: var(--sl-color-white);
+  }
+
+
+  .nb-btn {
+    align-items: center;
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 0 rgba(50, 0, 100, 0.5);
+    background: linear-gradient(180deg, #bb86ff 0%, #9346f5 55%, #7c2fe6 100%);
+    box-shadow: inset 0 3px 0 rgba(255, 255, 255, 0.28), inset 0 -4px 0 rgba(40, 0, 90, 0.45);
+    clip-path: polygon(0 4px, 4px 4px, 4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px));
+    transition: filter 0.2s;
+  }
+
+  .nb-btn:hover {
+    filter: brightness(1.12) saturate(1.1);
+    color: #fff;
+  }
+
+  /* 窄屏：品牌 + 搜索图标（右侧由 Starlight 菜单按钮补位），与官网一致只保留首页/文档 */
+  @media (max-width: 49.99rem) {
+    .nb-links {
+      display: none;
+    }
+  }
+
+  @media (min-width: 50rem) {
+    .nb-nav {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px;
+      gap: 28px;
+    }
+
+    .nb-desktop {
+      display: inline-flex;
+    }
+
+    /* 搜索收成紧凑按钮，放在右侧操作区 */
+    .nb-search :global(button[data-open-modal]) {
+      width: auto;
+      max-width: none;
+      min-width: 10.5rem;
+      border-radius: 8px;
+      border-color: rgba(205, 190, 255, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+    }
+  }
+</style>

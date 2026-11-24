@@ -1,0 +1,398 @@
+---
+import { withBase } from '../lib/site-path.mjs';
+// 官网首页：沿用原官网（ucketx.github.io/NEMCBridge）的视觉与结构，内容按公开正式版 v1.5.5 核对。
+const version = 'v1.5.5';
+const releaseUrl = `https://github.com/UCKETX/NEMCBridge/releases/tag/${version}`;
+const metadataUrl = `https://github.com/UCKETX/NEMCBridge/tree/${version}/release-metadata/${version}`;
+// 嵌入发布信息，页面不依赖访客实时请求 GitHub API；下载地址按官方 Releases 资产命名规则生成。
+const releaseData = {
+  latest: {
+    tag_name: version,
+    name: 'NEMCBridge v1.5.5 · 重进兼容与 Geyser 玩家列表修复',
+    html_url: releaseUrl,
+    published_at: '2026-11-23T15:06:05Z',
+    body: '',
+    assets: null,
+  },
+};
+const downloads = [
+  { os: 'windows', arch: 'amd64', label: 'Windows', note: '大多数 Intel / AMD 电脑' },
+  { os: 'windows', arch: 'arm64', label: 'Windows', note: '骁龙等 ARM 设备' },
+  { os: 'linux', arch: 'amd64', label: 'Linux', note: 'x86_64 服务器' },
+  { os: 'linux', arch: 'arm64', label: 'Linux', note: 'ARM64 服务器 / 树莓派' },
+  { os: 'macos', arch: 'arm64', label: 'macOS', note: 'Apple Silicon（M 系列）' },
+  { os: 'macos', arch: 'amd64', label: 'macOS', note: 'Intel 芯片' },
+].map((d) => {
+  const file = `NEMCBridge_${version}_${d.os}_${d.arch}${d.os === 'windows' ? '.zip' : '.tar.gz'}`;
+  return { ...d, file, href: `https://github.com/UCKETX/NEMCBridge/releases/download/${version}/${file}` };
+});
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NEMCBridge · 网易版接入 Bedrock 与 Java 服务器</title>
+    <meta
+      name="description"
+      content="NEMCBridge 将网易《我的世界》本地联机房间接入你的 Bedrock 服务器，并可通过 Geyser 接入 Java 服务器，让网易版与国际版玩家同服游玩。"
+    />
+    <meta name="theme-color" content="#0b0914" />
+    <link rel="icon" href={withBase('/site/assets/favicon.svg')} type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NEMCBridge" />
+    <meta property="og:description" content="让网易版与国际版 Bedrock 玩家，在同一个世界相遇。" />
+    <meta property="og:image" content={withBase('/site/assets/og.jpg')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preload" as="image" href={withBase('/site/assets/banner.webp')} type="image/webp" />
+    <link rel="stylesheet" href={withBase('/site/style.css')} />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline type="application/json" id="release-data" set:html={JSON.stringify(releaseData)} />
+    <script is:inline src={withBase('/site/main.js')} defer></script>
+  </head>
+  <body data-pagefind-ignore="all">
+    <a class="skip" href="#main">跳到正文</a>
+
+    <header class="nav" id="top">
+      <div class="nav-inner">
+        <a class="brand" href={withBase('/')} aria-label="NEMCBridge 首页">
+          <img src={withBase('/site/assets/favicon.svg')} alt="" width="28" height="28" />
+          <span>NEMC<b>Bridge</b></span>
+        </a>
+        <nav class="nav-links" id="nav-links" aria-label="主导航">
+          <a href={withBase('/')} aria-current="page">首页</a>
+          <a href={withBase('/wiki/')}>文档</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="icon-link" href="https://qm.qq.com/q/GMQQF4zSyy" aria-label="加入 QQ 群" title="加入 QQ 群" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M21.395 15.035a40 40 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a39 39 0 0 0-.802 2.264c-1.021 3.283-.69 4.643-.438 4.673.54.065 2.103-2.472 2.103-2.472 0 1.469.756 3.387 2.394 4.771-.612.188-1.363.479-1.845.835-.434.32-.379.646-.301.778.343.578 5.883.369 7.482.189 1.6.18 7.14.389 7.483-.189.078-.132.132-.458-.301-.778-.483-.356-1.233-.646-1.846-.836 1.637-1.384 2.393-3.302 2.393-4.771 0 0 1.563 2.537 2.103 2.472.251-.03.581-1.39-.438-4.673"></path></svg>
+          </a>
+          <a class="icon-link" href="https://github.com/UCKETX/NEMCBridge" aria-label="GitHub 仓库" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          </a>
+          <a class="btn btn-sm btn-primary" href="#download">下载</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <canvas class="embers" aria-hidden="true"></canvas>
+        <div class="hero-sky" aria-hidden="true"></div>
+        <div class="wrap hero-inner">
+          <a class="release-pill" href={releaseUrl} target="_blank" rel="noopener" data-reveal>
+            <span class="pill-tag">NEW</span>
+            <span data-release-label>{version} 已发布 · 重进兼容与 Geyser 玩家列表修复</span>
+            <span aria-hidden="true">→</span>
+          </a>
+          <h1 data-reveal>
+            让网易版与国际版玩家<br />
+            在<span class="portal-text">同一个世界</span>相遇
+          </h1>
+          <p class="lead" data-reveal>
+            房主机器人常驻网易「本地联机」房间，把玩家接入你自己的 Bedrock 服务器。<br />
+            推荐官方 BDS 1.21.130.4，实验性支持所列 1.21.120–26.60 后端，也可经 Geyser 接入 Java 服务器；<a href={withBase('/wiki/resource-packs-and-compatibility/')}>查看测试范围与限制</a>。
+          </p>
+          <div class="hero-cta" data-reveal>
+            <a class="btn btn-primary btn-lg" href="#download" data-os-download>
+              <svg class="btn-icon" viewBox="0 0 8 10" width="16" height="20" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 0h2v8H3zM0 3h1v2H0zm1 1h1v2H1zm1 1h1v2H2zm5-2h1v2H7zM6 4h1v2H6zM5 5h1v2H5zM0 9h8v1H0z"></path></svg>
+              <span><span data-os-label>下载 NEMCBridge</span><small data-version-label>{version} · 免安装单文件</small></span>
+            </a>
+            <a class="btn btn-ghost btn-lg" href={withBase('/wiki/')}>
+              <span>查看文档</span><span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <ul class="hero-meta" data-reveal>
+            <li>Windows · Linux · macOS</li>
+            <li>amd64 / arm64</li>
+            <li>签名校验 · 一键更新</li>
+          </ul>
+
+          <figure class="showcase" data-reveal data-tilt>
+            <div class="showcase-glow" aria-hidden="true"></div>
+            <picture>
+              <source srcset={withBase('/site/assets/banner.webp')} type="image/webp" />
+              <img src={withBase('/site/assets/banner-1200.jpg')} width="2000" height="667" alt="插画：紫色下界传送门连接两片方块世界，左侧是竹林与中式楼阁，右侧是草地与山脉，两名方块玩家隔门相迎" />
+            </picture>
+            <figcaption>
+              <span><i class="dot dot-green"></i>房间在线</span>
+              <span>网易版 ⇄ Bedrock / Java</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="stats wrap" aria-label="项目概览">
+        <div class="stat" data-reveal><strong><span>2</span><em>端</em></strong><span>网易版与国际版<br />同服互通</span></div>
+        <div class="stat" data-reveal><strong><span>6</span><em>个</em></strong><span>平台架构<br />发布包</span></div>
+        <div class="stat" data-reveal><strong><span>0</span><em>依赖</em></strong><span>单个可执行文件<br />解压即用</span></div>
+      </section>
+
+      <section class="section" id="how">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <span class="kicker">01 · HOW IT WORKS</span>
+            <h2>一座桥，连接两套协议</h2>
+            <p>网易玩家从本地联机房间进入，NEMCBridge 完成身份映射与协议转换，再接入 BDS，或经 Geyser 进入 Java 世界。国际版玩家直连同一台服务器。</p>
+          </div>
+
+          <div class="flow" data-reveal>
+            <div class="node node-ne">
+              <i class="px-icon" data-icon="player-a"></i>
+              <b>网易版玩家</b><small>「本地联机」<br /><i class="sep">·</i>搜索房间号</small>
+            </div>
+            <div class="link" data-proto="加入"></div>
+            <div class="node">
+              <i class="px-icon" data-icon="room"></i>
+              <b>本地联机房间</b><small>机器人常驻<br /><i class="sep">·</i>掉线自动重开</small>
+            </div>
+            <div class="link" data-proto="WebRTC"></div>
+            <div class="core">
+              <div class="auth-tag"><b>FGAuth</b> 房主鉴权</div>
+              <div class="core-portal" aria-hidden="true"><span></span></div>
+              <b>NEMCBridge</b>
+              <ul>
+                <li>协议转换</li>
+                <li>账号身份映射</li>
+                <li>皮肤 · 聊天同步</li>
+                <li>外观兼容包下发</li>
+              </ul>
+            </div>
+            <div class="link" data-proto="Bedrock"></div>
+            <div class="node node-bds">
+              <i class="px-icon" data-icon="grass"></i>
+              <b>游戏服务器</b><small>BDS 或 Geyser<br /><i class="sep">·</i>同一个世界</small>
+            </div>
+            <div class="link link-rev" data-proto="客户端直连"></div>
+            <div class="node node-intl">
+              <i class="px-icon" data-icon="player-b"></i>
+              <b>国际版玩家</b><small>基岩版或 Java 版<br /><i class="sep">·</i>直连服务器</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <span class="kicker">02 · FEATURES</span>
+            <h2>开好房，就交给它</h2>
+            <p>以下按公开正式版 {version} 整理；标注 Beta 与实验性的部分仍有明确限制。</p>
+          </div>
+
+          <div class="bento">
+            <article class="card card-play" data-reveal>
+              <i class="px-icon" data-icon="grass"></i>
+              <h3>真正的共同游玩</h3>
+              <p>地形、物品、配方与实体数据按后端协议转换；每个网易账号按大厅核验的 UID 拥有独立存档，OP 由各服务器后端自行管理。多版本后端仍属<span class="flag flag-exp">实验性</span>，详见<a href={withBase('/wiki/resource-packs-and-compatibility/')}>兼容范围</a>。</p>
+              <div class="chat" aria-label="聊天示例">
+                <div class="msg msg-l"><span class="tag tag-ne">网易</span><b>竹林小筑</b>今晚一起去下界吗？</div>
+                <div class="msg msg-r"><span class="tag tag-intl">国际版</span><b>Steve</b>Sure! I'll bring the obsidian ⛏️</div>
+                <div class="msg msg-l"><span class="tag tag-ne">网易</span><b>竹林小筑</b>传送门见 👋</div>
+              </div>
+              <ul class="chips">
+                <li>区块加载</li><li>方块交互</li><li>双向聊天</li><li>皮肤互显</li><li>4D 装扮</li><li>服务器材质包</li><li>独立存档</li>
+              </ul>
+            </article>
+
+            <article class="card card-console" data-reveal>
+              <i class="px-icon" data-icon="monitor"></i>
+              <h3>网页控制台</h3>
+              <p>带管理员登录的 Web 控制台：配置验证服务器、令牌、国际服与房间参数，按服查看状态和运行日志；有新版本时一键更新。</p>
+              <div class="mock-console" aria-hidden="true">
+                <div class="mc-bar"><i></i><i></i><i></i><span>127.0.0.1:18321</span></div>
+                <div class="mc-top">
+                  <span class="mc-brand"><img src={withBase('/site/assets/favicon.svg')} alt="" width="14" height="14" /><span>NEMC<b>Bridge</b></span><small>控制台</small></span>
+                  <span class="mc-pill"><i></i>房间在线</span>
+                </div>
+                <div class="mc-body">
+                  <div class="mc-hero">
+                    <div>
+                      <small>本地联机房间号</small>
+                      <strong class="mc-room" data-room>48207153</strong>
+                    </div>
+                    <div class="mc-actions"><span>停止房间</span><span>复制房间号</span></div>
+                  </div>
+                  <div class="mc-stats">
+                    <div><small><i class="px-icon" data-icon="grass"></i>本地服务器</small><b class="mc-ok">在线</b></div>
+                    <div><small><i class="px-icon" data-icon="player-b"></i>在线玩家</small><b data-players>4</b></div>
+                    <div><small><i class="px-icon" data-icon="lantern"></i>在线时间</small><b data-uptime>3时 12分</b></div>
+                  </div>
+                  <div class="mc-log">
+                    <div class="mc-log-bar"><i></i><i></i><i></i><span>logs/keeper.log</span></div>
+                    <div class="mc-log-body" data-log>
+                      <p><time>21:04:12</time>竹林小筑 加入了游戏</p>
+                      <p><time>21:04:30</time>&lt;Steve&gt; welcome!</p>
+                      <p class="is-debug"><time>21:05:02</time>[DEBUG] 区块批次 214 KiB</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card" data-reveal>
+              <i class="px-icon" data-icon="lantern"></i>
+              <h3>多房间 · 突破 10 人<span class="flag flag-beta">Beta</span></h3>
+              <p>多个机器人账号各开独立房间，掉线自动重开。开启 Beta 后网易玩家自动转服、释放大厅名额；超过 9 位访客同时在线尚未实测，<a href={withBase('/wiki/backends-and-gateway/')}>查看网关配置</a>。</p>
+              <div class="uptime-bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="warn"></i><i class="ok"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </article>
+
+            <article class="card" data-reveal>
+              <i class="px-icon" data-icon="friends"></i>
+              <h3>好友与私信</h3>
+              <p>默认每 30 秒检查并同意好友申请，可按账号关闭；无需开房即可管理好友，并向网易好友发送私信（仅发送）。</p>
+            </article>
+
+            <article class="card card-term" data-reveal>
+              <i class="px-icon" data-icon="terminal"></i>
+              <h3>终端启动界面</h3>
+              <p>蓝青色块字横幅，开机即显示版本、访问地址与首次初始化提示。</p>
+              <pre class="term" aria-label="终端启动横幅示例" data-term></pre>
+            </article>
+
+            <article class="card" data-reveal>
+              <i class="px-icon" data-icon="diamond"></i>
+              <h3>跨平台部署</h3>
+              <p>Windows、Linux、macOS 各有 amd64 与 arm64 发布包，附 SHA256 校验与 Ed25519 发布签名。</p>
+              <div class="os-grid" aria-hidden="true">
+                <span>win/amd64</span><span>win/arm64</span><span>linux/amd64</span><span>linux/arm64</span><span>mac/amd64</span><span>mac/arm64</span>
+              </div>
+            </article>
+
+            <article class="card" data-reveal>
+              <i class="px-icon" data-icon="lock"></i>
+              <h3>凭据本地加密</h3>
+              <p>令牌独立存放：Windows 用 DPAPI 加密，Linux/macOS 以 <code>0600</code> 权限保存；管理密码 bcrypt 哈希。</p>
+              <ul class="chips">
+                <li>DPAPI</li><li>chmod 0600</li><li>bcrypt</li><li>初始化码</li><li>登录限速</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="start">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <span class="kicker">03 · GET STARTED</span>
+            <h2>三步跑通第一个房间</h2>
+            <p>先在同一台机器上用官方 BDS 跑通一个普通房间，再扩展多房间、跨版本或转服网关。</p>
+          </div>
+
+          <ol class="steps">
+            <li class="step" data-reveal>
+              <span class="step-num">1</span>
+              <h3>准备后端</h3>
+              <p>运行 BDS 1.21.130.4（或<a href={withBase('/wiki/resource-packs-and-compatibility/')}>兼容表</a>内版本），在 <code>server.properties</code> 中设置：</p>
+              <div class="code">
+                <button class="copy" type="button" data-copy>复制</button>
+<pre><code><span class="k">online-mode</span>=<span class="v">false</span>
+<span class="k">compression-algorithm</span>=<span class="v">zlib</span>
+<span class="k">block-network-ids-are-hashes</span>=<span class="v">true</span></code></pre>
+              </div>
+              <p class="note">后端使用离线身份，请用防火墙限制访问范围。26.50 / 26.60 按 NetherNet 接入，见<a href={withBase('/wiki/backends-and-gateway/')}>后端地址格式</a>。</p>
+            </li>
+
+            <li class="step" data-reveal>
+              <span class="step-num">2</span>
+              <h3>下载并启动</h3>
+              <p>在下方<a href="#download">下载</a>对应系统与架构的压缩包，解压后运行：</p>
+              <div class="tabs" role="tablist" aria-label="选择系统">
+                <button role="tab" type="button" aria-selected="true" aria-controls="tab-win" id="t-win">Windows</button>
+                <button role="tab" type="button" aria-selected="false" aria-controls="tab-linux" id="t-linux">Linux</button>
+                <button role="tab" type="button" aria-selected="false" aria-controls="tab-mac" id="t-mac">macOS</button>
+              </div>
+              <div class="tab-panel" role="tabpanel" id="tab-win" aria-labelledby="t-win">
+                <p>双击 <code>NEMCBridge.exe</code>，或在 PowerShell 中指定数据目录：</p>
+                <div class="code"><button class="copy" type="button" data-copy>复制</button><pre><code>.\NEMCBridge.exe -data-dir .\data</code></pre></div>
+              </div>
+              <div class="tab-panel" role="tabpanel" id="tab-linux" aria-labelledby="t-linux" hidden>
+                <p>x86 服务器选 <code>amd64</code>，ARM 服务器选 <code>arm64</code>。</p>
+                <div class="code"><button class="copy" type="button" data-copy>复制</button><pre><code>chmod +x NEMCBridge
+./NEMCBridge -data-dir ./data</code></pre></div>
+              </div>
+              <div class="tab-panel" role="tabpanel" id="tab-mac" aria-labelledby="t-mac" hidden>
+                <p>Apple Silicon 选 <code>arm64</code>，Intel 芯片选 <code>amd64</code>。</p>
+                <div class="code"><button class="copy" type="button" data-copy>复制</button><pre><code>chmod +x NEMCBridge
+./NEMCBridge -data-dir ./data</code></pre></div>
+              </div>
+            </li>
+
+            <li class="step" data-reveal>
+              <span class="step-num">3</span>
+              <h3>登录并开房</h3>
+              <p>打开 <code>http://127.0.0.1:18321/</code>，输入终端显示的一次性初始化码并设置管理员账号。依次填写 FGAuth、国际服地址和机器人令牌，绑定后在「概览」点击「启动房间」。</p>
+              <div class="join">
+                <div><span class="tag tag-ne">网易</span>「本地联机」搜索控制台显示的房间号</div>
+                <div><span class="tag tag-intl">国际版</span>添加服务器：BDS 地址 + UDP 端口</div>
+              </div>
+            </li>
+          </ol>
+          <p class="more" data-reveal>远程管理、升级、多房间与排错 → <a href={withBase('/wiki/quick-start/')}>完整快速开始</a> · <a href={withBase('/wiki/troubleshooting-and-logs/')}>常见故障与日志</a></p>
+        </div>
+      </section>
+
+      <section class="section" id="download">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <span class="kicker">04 · DOWNLOAD</span>
+            <h2>下载 <span data-version>{version}</span></h2>
+            <p><span data-release-date>选择你的系统与架构。</span>文件直接来自官方 GitHub Releases，解压即可运行；SHA256 与签名见 <a href={metadataUrl} target="_blank" rel="noopener">release-metadata</a>。</p>
+          </div>
+          <div class="downloads" data-downloads>
+            {
+              downloads.map((d) => (
+                <a class="dl" data-reveal data-os={d.os} data-arch={d.arch} href={d.href} rel="noopener">
+                  <span class="dl-os">{d.label}</span>
+                  <span class="dl-arch">{d.arch}</span>
+                  <small>{d.note}</small>
+                  <span class="dl-file">{d.file}</span>
+                </a>
+              ))
+            }
+          </div>
+          <p class="more" data-reveal>
+            <a href={releaseUrl} target="_blank" rel="noopener">{version} 发行说明</a> ·
+            <a href="https://github.com/UCKETX/NEMCBridge/releases" target="_blank" rel="noopener">所有版本</a> ·
+            <a href={withBase('/wiki/releases-and-downloads/')}>版本变化与校验步骤</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-grid">
+        <div>
+          <a class="brand" href={withBase('/')}><img src={withBase('/site/assets/favicon.svg')} alt="" width="24" height="24" /><span>NEMC<b>Bridge</b></span></a>
+          <p>让网易版与国际版 Bedrock 玩家，在同一个世界相遇。</p>
+        </div>
+        <div>
+          <h4>文档</h4>
+          <a href={withBase('/wiki/quick-start/')}>快速开始</a>
+          <a href={withBase('/wiki/resource-packs-and-compatibility/')}>兼容性</a>
+          <a href={withBase('/wiki/troubleshooting-and-logs/')}>常见故障</a>
+          <a href={withBase('/wiki/')}>全部文档</a>
+        </div>
+        <div>
+          <h4>社区</h4>
+          <a href="https://qm.qq.com/q/GMQQF4zSyy" target="_blank" rel="noopener">QQ 群</a>
+          <a href="https://github.com/UCKETX/NEMCBridge" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/UCKETX/NEMCBridge/issues" target="_blank" rel="noopener">问题反馈</a>
+          <a href="https://github.com/UCKETX/NEMCBridge/blob/main/SECURITY.md" target="_blank" rel="noopener">安全反馈</a>
+        </div>
+        <div>
+          <h4>致谢</h4>
+          <a href="https://github.com/Happy2018new/nemc-tan-lobby-solver" target="_blank" rel="noopener">nemc-tan-lobby-solver</a>
+          <a href="https://github.com/Sandertv/gophertunnel" target="_blank" rel="noopener">gophertunnel</a>
+          <a href="https://github.com/pion" target="_blank" rel="noopener">Pion</a>
+          <a href="https://github.com/UCKETX/neomega-admin" target="_blank" rel="noopener">neomega-admin</a>
+        </div>
+      </div>
+      <div class="wrap footer-legal">
+        <p>程序包含的第三方组件保留各自的许可，见 <a href="https://github.com/UCKETX/NEMCBridge/blob/main/THIRD_PARTY_NOTICES.md" target="_blank" rel="noopener">THIRD_PARTY_NOTICES</a>；从 v0.1.9 起，发布包附带完整的许可证原文。</p>
+        <p>本项目为独立社区工具，与 Mojang、Microsoft 或网易无隶属、赞助或官方合作关系。Minecraft 及相关商标归各自权利人所有。页面插画为原创生成图，非游戏实机截图。</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -14,15 +14,15 @@ description: 按现象快速定位 NEMCBridge 开房、进服、转服、网络�
 
 | 故障现象 | 优先检查步骤 | 关联文档 |
 | --- | --- | --- |
-| 提示「客户端与房主版本不同」 | 分别核对三者：网易客户端（`3.10` 系列）、房间内核（保持 `1.21.130.0`）、国际服协议（11 档列表内）。不要把房间版本改成后端版本。 | [资源包与兼容性](/resource-packs-and-compatibility/#二bds-协议兼容表) |
-| 机器人反复掉线并重开 | 1) 检查同一网易账号是否被手机或其他进程登录；2) 检查多房间是否误用同一账号；3) 检查 FGAuth 鉴权与网络状态。重开后房间号可能变化。 | [网易账号和开房](/accounts-and-rooms/#多账号与多房间配置步骤) |
-| 能搜到房间，但进不了世界 | 1) 确认后端已运行且地址格式正确（RakNet 填 `主机:UDP端口`，NetherNet 填 `http://主机:信令端口` 并放通媒体 UDP）；2) 确认 `online-mode=false`、`compression-algorithm=zlib`、`block-network-ids-are-hashes=true`。 | [快速开始](/quick-start/#1-配置并重启-bds) |
-| 开转服网关后停在第二段加载 | 1) 确认公网转发的是 **UDP** 而非 TCP/HTTP；2) 确认转发到桥接本机 `19441` 而非 BDS 或 `18321`；3) 用外网手机实测；4) 必要时临时设 `NEMCBRIDGE_LIGHTWEIGHT_ENTRY=0` 或关闭 Beta 隔离排查。 | [国际服与转服网关](/backends-and-gateway/#自动转服网关突破10人限制-beta) |
-| 材质包下载完成但进游戏不生效 | 先用国际版直连核对 `world_resource_packs.json` 的 UUID、版本与依赖；更新包后是否提升了版本号并重开房间。 | [资源包与兼容性](/resource-packs-and-compatibility/#安装服务器自制材质包步骤) |
-| 国际版看不到玩家皮肤或 4D 装扮 | 国际版关闭「仅允许受信任的皮肤」重进；区分普通皮肤与已适配 4D 模型，并非所有商城 4D 模型都支持跨端渲染。 | [资源包与兼容性](/resource-packs-and-compatibility/#4d-皮肤同步与边界v151) |
+| 提示「客户端与房主版本不同」 | 分别核对三者：网易客户端（`3.10` 系列）、房间内核（保持 `1.21.130.0`）、国际服协议（11 档列表内）。不要把房间版本改成后端版本。 | [资源包与兼容性](../resource-packs-and-compatibility/#二bds-协议兼容表) |
+| 机器人反复掉线并重开 | 1) 检查同一网易账号是否被手机或其他进程登录；2) 检查多房间是否误用同一账号；3) 检查 FGAuth 鉴权与网络状态。重开后房间号可能变化。 | [网易账号和开房](../accounts-and-rooms/#多账号与多房间配置步骤) |
+| 能搜到房间，但进不了世界 | 1) 确认后端已运行且地址格式正确（RakNet 填 `主机:UDP端口`，NetherNet 填 `http://主机:信令端口` 并放通媒体 UDP）；2) 确认 `online-mode=false`、`compression-algorithm=zlib`、`block-network-ids-are-hashes=true`。 | [快速开始](../quick-start/#1-配置并重启-bds) |
+| 开转服网关后停在第二段加载 | 1) 确认公网转发的是 **UDP** 而非 TCP/HTTP；2) 确认转发到桥接本机 `19441` 而非 BDS 或 `18321`；3) 用外网手机实测；4) 必要时临时设 `NEMCBRIDGE_LIGHTWEIGHT_ENTRY=0` 或关闭 Beta 隔离排查。 | [国际服与转服网关](../backends-and-gateway/#自动转服网关突破10人限制-beta) |
+| 材质包下载完成但进游戏不生效 | 先用国际版直连核对 `world_resource_packs.json` 的 UUID、版本与依赖；更新包后是否提升了版本号并重开房间。 | [资源包与兼容性](../resource-packs-and-compatibility/#安装服务器自制材质包步骤) |
+| 国际版看不到玩家皮肤或 4D 装扮 | 国际版关闭「仅允许受信任的皮肤」重进；区分普通皮肤与已适配 4D 模型，并非所有商城 4D 模型都支持跨端渲染。 | [资源包与兼容性](../resource-packs-and-compatibility/#4d-皮肤同步与边界v151) |
 | macOS 开启 VPN 后卡在 `ICE Checking` | 先在无 VPN 的可信网络对照。确认物理网卡 UDP 可用时，可单次指定 `NEMCBRIDGE_ICE_INTERFACE=en0`（按实际网卡名替换）启动；该变量只绑定 WebRTC 接口，不修改系统路由。 | — |
-| FGAuth 公钥变化，程序拒绝连接 | 通过可信渠道向验证站管理员核实公钥是否合法变更或迁移；**不要盲删 `auth-trust/`**。 | [网易账号和开房](/accounts-and-rooms/#fgauth-鉴权与信任机制) |
-| 访客昵称直查异常 | `v1.5.5` 默认直查网易档案；排查阶段可临时设置 `NEMCBRIDGE_DIRECT_GUEST_LOOKUP=0` 重启，改由 FGAuth 核验做对照。 | [网易账号和开房](/accounts-and-rooms/#访客身份昵称核验与-op-权限v155-行为) |
+| FGAuth 公钥变化，程序拒绝连接 | 通过可信渠道向验证站管理员核实公钥是否合法变更或迁移；**不要盲删 `auth-trust/`**。 | [网易账号和开房](../accounts-and-rooms/#fgauth-鉴权与信任机制) |
+| 访客昵称直查异常 | `v1.5.5` 默认直查网易档案；排查阶段可临时设置 `NEMCBRIDGE_DIRECT_GUEST_LOOKUP=0` 重启，改由 FGAuth 核验做对照。 | [网易账号和开房](../accounts-and-rooms/#访客身份昵称核验与-op-权限v155-行为) |
 
 ## 查看日志与临时开启 Debug
 

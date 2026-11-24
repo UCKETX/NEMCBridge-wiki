@@ -1,13 +1,24 @@
-# NEMCBridge 中文 Wiki
+# NEMCBridge 官网与中文 Wiki
 
-基于 [Astro Starlight](https://starlight.astro.build/) 构建的 NEMCBridge 中文静态文档站。支持 Markdown、侧栏与移动端抽屉导航、页内目录、深浅色切换，以及内置 [Pagefind](https://pagefind.app/) 站内中文全文搜索（无需外部搜索账号）。
+基于 [Astro](https://astro.build/) + [Starlight](https://starlight.astro.build/) 构建的单仓库、一次静态构建、同域名站点：
+
+- `/`：NEMCBridge 官网首页（能力概览、首次配置顺序、官方 Releases 下载入口、自绘连接架构图）
+- `/wiki/`：Starlight 中文运维与使用文档（侧栏与移动端抽屉导航、页内目录、深色主题、内置 [Pagefind](https://pagefind.app/) 中文全文搜索，无需外部搜索账号）
+- 旧路径兼容跳转：保留 `/docs.html`、`/docs/`、原根路径文档（如 `/quick-start/`）及旧 GitHub Wiki 路径（如 `/Transfer-Gateway/`、`/Compatibility/`、`/wiki/Operations/`）的静态跳转与锚点映射
 
 - **当前文档基准版本**：公开正式版 `v1.5.5`
 - **资料来源**：[UCKETX/NEMCBridge](https://github.com/UCKETX/NEMCBridge)、[GitHub Releases](https://github.com/UCKETX/NEMCBridge/releases)、[GitHub Wiki](https://github.com/UCKETX/NEMCBridge/wiki) 与原项目文档页
 
+## 站点地址
+
+- [NEMCBridge 官网](https://ucketx.github.io/NEMCBridge-wiki/)
+- [NEMCBridge 中文 Wiki](https://ucketx.github.io/NEMCBridge-wiki/wiki/)
+
+推送到 `main` 后，GitHub Actions 构建、校验并将官网与文档一起部署到 GitHub Pages。发布流程从 Pages 配置读取站点地址与子路径；本地开发仍从 `/` 开始。
+
 ## 环境要求
 
-- Node.js `>= 20`（当前开发验证环境为 Node.js `v23.10.0` / npm `10.9.2`）
+- Node.js `22.23.4+`（CI 使用 22.x）
 
 ## 安装与运行
 
@@ -45,11 +56,24 @@ npm run verify
 ```text
 .
 ├── astro.config.mjs                 # Astro 与 Starlight 导航、语言配置
+├── public/
+│   ├── favicon.svg                  # 站点图标（与原官网相同的像素图标）
+│   ├── site/                        # 官网样式、脚本与插画（沿用原官网 site/ 的设计，内容按 v1.5.5 更新）
+│   └── docs.html                    # 旧 /docs.html 入口跳转（含锚点映射）
 ├── src/
 │   ├── content.config.ts            # Starlight 文档集合定义
-│   ├── styles/custom.css            # 简洁紫色强调主题与响应式表格/网格样式
-│   └── content/docs/                # 中文 Markdown 文档页面
-│       ├── index.md                 # 首页（按服主任务组织）
+│   ├── components/
+│   │   ├── Header.astro             # Wiki 顶栏（与官网导航一致：首页/文档/搜索/QQ 群/GitHub/下载）
+│   │   ├── StarlightSiteTitle.astro # Wiki 品牌（同官网像素图标，点击回官网）
+│   │   ├── Footer.astro             # 上一页/下一页 + 与官网一致的站点页脚
+│   │   ├── ThemeProvider.astro      # 文档固定深色（与官网一致）
+│   │   └── MobileMenuFooter.astro   # 窄屏抽屉底部（QQ 群 / GitHub / 下载）
+│   ├── pages/
+│   │   ├── index.astro              # 官网首页（/）
+│   │   └── [...legacy].astro        # 旧文档与旧 GitHub Wiki 路径跳转
+│   ├── styles/custom.css            # Wiki 简洁紫色强调主题与响应式样式
+│   └── content/docs/wiki/           # 中文 Markdown 文档页面（/wiki/*）
+│       ├── index.md                 # 文档首页（按服主任务组织）
 │       ├── quick-start.md           # 快速开始
 │       ├── install-update-backup.md # 安装、更新与备份
 │       ├── accounts-and-rooms.md    # 网易账号和开房
@@ -60,7 +84,7 @@ npm run verify
 ├── scripts/
 │   ├── check-links.mjs              # 站内链接与锚点校验
 │   └── check-search.mjs             # Pagefind 中文分词检索校验
-└── .github/workflows/ci.yml         # 最小 CI 构建校验（不含自动部署）
+└── .github/workflows/              # ci.yml 校验；pages.yml 发布到 GitHub Pages
 ```
 
 ## 文档维护规范

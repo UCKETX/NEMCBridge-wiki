@@ -52,7 +52,7 @@ description: 平台安装包选择、命令行启动参数、数据目录备份�
 | `auth-trust/` | 已信任的 FGAuth 服务端公钥 | **升级或迁移时务必保留**；不要在未核实的情况下盲删。 |
 | `account-profiles.json` | 缓存的账号公开资料（UID/昵称/头像） | 不含令牌，可重建。 |
 | `cache/appearance/` | 按协议自动下载校验的兼容外观包缓存 | 保留可避免重复下载，必要时可清空重下。 |
-| `logs/keeper.log` / `logs/status.json` | 完整运行日志与状态快照 | 排错提交前必须脱敏，详见 [常见故障与日志](/troubleshooting-and-logs/)。 |
+| `logs/keeper.log` / `logs/status.json` | 完整运行日志与状态快照 | 排错提交前必须脱敏，详见 [常见故障与日志](../troubleshooting-and-logs/)。 |
 
 ### 备份操作步骤
 

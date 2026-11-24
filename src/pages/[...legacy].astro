@@ -1,0 +1,109 @@
+---
+import { withBase } from '../lib/site-path.mjs';
+interface LegacyEntry {
+  legacy: string;
+  target: string;
+  hashMap?: Record<string, string>;
+}
+
+export function getStaticPaths() {
+  const docsHashMap: Record<string, string> = {
+    '#start': '/wiki/quick-start/',
+    '#quickstart': '/wiki/quick-start/',
+    '#quick-start': '/wiki/quick-start/',
+    '#download': '/#download',
+    '#downloads': '/#download',
+    '#compat': '/wiki/resource-packs-and-compatibility/#二bds-协议兼容表',
+    '#compatibility': '/wiki/resource-packs-and-compatibility/#二bds-协议兼容表',
+    '#resources': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+    '#appearance': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+    '#resource-packs': '/wiki/resource-packs-and-compatibility/#一资源包与-4d-皮肤',
+    '#faq': '/wiki/troubleshooting-and-logs/#按现象快速排查',
+    '#troubleshooting': '/wiki/troubleshooting-and-logs/#按现象快速排查',
+    '#changelog': '/wiki/releases-and-downloads/#近期关键版本脉络',
+  };
+
+  const operationsHashMap: Record<string, string> = {
+    '#多账号和多房间': '/wiki/accounts-and-rooms/#多账号与多房间配置步骤',
+    '#数据目录与远程管理': '/wiki/install-update-backup/#数据目录结构与备份',
+    '#升级与校验': '/wiki/install-update-backup/#更新程序',
+  };
+
+  const compatibilityHashMap: Record<string, string> = {
+    '#后端地址怎么填': '/wiki/backends-and-gateway/#后端地址与传输协议',
+    '#bds-协议表': '/wiki/resource-packs-and-compatibility/#二bds-协议兼容表',
+    '#geyser-与其他服务端': '/wiki/resource-packs-and-compatibility/#三geyser-与其他基岩服务端',
+  };
+
+  const entries: LegacyEntry[] = [
+    // 旧站内文档根路径别名（保留原锚点）
+    { legacy: 'quick-start', target: '/wiki/quick-start/' },
+    { legacy: 'install-update-backup', target: '/wiki/install-update-backup/' },
+    { legacy: 'accounts-and-rooms', target: '/wiki/accounts-and-rooms/' },
+    { legacy: 'backends-and-gateway', target: '/wiki/backends-and-gateway/' },
+    { legacy: 'resource-packs-and-compatibility', target: '/wiki/resource-packs-and-compatibility/' },
+    { legacy: 'troubleshooting-and-logs', target: '/wiki/troubleshooting-and-logs/' },
+    { legacy: 'releases-and-downloads', target: '/wiki/releases-and-downloads/' },
+
+    // 旧 /docs/ 入口
+    { legacy: 'docs', target: '/wiki/', hashMap: docsHashMap },
+
+    // 旧 GitHub Wiki 页面路径（根路径）
+    { legacy: 'Home', target: '/wiki/' },
+    { legacy: 'Operations', target: '/wiki/install-update-backup/', hashMap: operationsHashMap },
+    { legacy: 'Transfer-Gateway', target: '/wiki/backends-and-gateway/' },
+    { legacy: 'Compatibility', target: '/wiki/resource-packs-and-compatibility/', hashMap: compatibilityHashMap },
+    { legacy: 'Resource-Packs', target: '/wiki/resource-packs-and-compatibility/' },
+    { legacy: 'Troubleshooting', target: '/wiki/troubleshooting-and-logs/' },
+
+    // 旧 GitHub Wiki 页面路径（/wiki/ 前缀下，避开与 wiki/quick-start 大小写冲突）
+    { legacy: 'wiki/Home', target: '/wiki/' },
+    { legacy: 'wiki/Operations', target: '/wiki/install-update-backup/', hashMap: operationsHashMap },
+    { legacy: 'wiki/Transfer-Gateway', target: '/wiki/backends-and-gateway/' },
+    { legacy: 'wiki/Compatibility', target: '/wiki/resource-packs-and-compatibility/', hashMap: compatibilityHashMap },
+    { legacy: 'wiki/Resource-Packs', target: '/wiki/resource-packs-and-compatibility/' },
+    { legacy: 'wiki/Troubleshooting', target: '/wiki/troubleshooting-and-logs/' },
+  ];
+
+  return entries.map((entry) => ({
+    params: { legacy: entry.legacy },
+    props: entry,
+  }));
+}
+
+const { target: destination, hashMap: legacyAnchors = {} } = Astro.props as LegacyEntry;
+const target = withBase(destination);
+const hashMap = Object.fromEntries(
+  Object.entries(legacyAnchors).map(([hash, url]) => [hash, withBase(url)]),
+);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>正在跳转到 NEMCBridge 文档…</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={target} />
+    <meta http-equiv="refresh" content={`1;url=${target}`} />
+    <script is:inline define:vars={{ target, hashMap }}>
+      (() => {
+        const rawHash = window.location.hash || '';
+        let decoded = '';
+        try {
+          decoded = decodeURIComponent(rawHash).toLowerCase();
+        } catch {
+          decoded = rawHash.toLowerCase();
+        }
+        const dest = hashMap[decoded] || target + rawHash;
+        window.location.replace(dest);
+      })();
+    </script>
+  </head>
+  <body data-pagefind-ignore="all">
+    <p>
+      页面已迁移至 <a href={target}>{target}</a>，正在自动跳转…
+    </p>
+  </body>
+</html>

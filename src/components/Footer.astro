@@ -1,0 +1,108 @@
+---
+import { withBase } from '../lib/site-path.mjs';
+// 保留 Starlight 默认页脚（上一页/下一页等），再接上与官网一致的站点页脚。
+import Default from '@astrojs/starlight/components/Footer.astro';
+---
+
+<Default />
+
+<footer class="nb-footer" data-pagefind-ignore>
+  <div class="nb-footer-grid">
+    <div>
+      <a class="nb-footer-brand" href={withBase('/')}>
+        <img src={withBase('/site/assets/favicon.svg')} alt="" width="22" height="22" />
+        <span>NEMC<b>Bridge</b></span>
+      </a>
+      <p>让网易版与国际版 Bedrock 玩家，在同一个世界相遇。</p>
+    </div>
+    <nav aria-label="官网">
+      <h4>官网</h4>
+      <a href={withBase('/')}>首页</a>
+      <a href={withBase('/#start')}>三步开始</a>
+      <a href={withBase('/#download')}>下载</a>
+    </nav>
+    <nav aria-label="社区">
+      <h4>社区</h4>
+      <a href="https://github.com/UCKETX/NEMCBridge/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://github.com/UCKETX/NEMCBridge/issues" target="_blank" rel="noopener">问题反馈</a>
+      <a href="https://github.com/UCKETX/NEMCBridge/blob/main/SECURITY.md" target="_blank" rel="noopener">安全反馈</a>
+    </nav>
+  </div>
+  <p class="nb-footer-legal">
+    本项目为独立社区工具，与 Mojang、Microsoft 或网易无隶属、赞助或官方合作关系。Minecraft 及相关商标归各自权利人所有。
+  </p>
+</footer>
+
+<style>
+  .nb-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: 0.875rem;
+  }
+
+  .nb-footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .nb-footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--sl-color-white);
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .nb-footer-brand img {
+    image-rendering: pixelated;
+    border-radius: 4px;
+  }
+
+  .nb-footer-brand b {
+    color: var(--sl-color-accent-high);
+  }
+
+  .nb-footer p {
+    margin: 0.75rem 0 0;
+    color: var(--sl-color-gray-4);
+  }
+
+  .nb-footer h4 {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--sl-color-gray-3);
+  }
+
+  .nb-footer nav a {
+    display: block;
+    padding: 0.2rem 0;
+    color: var(--sl-color-gray-4);
+    text-decoration: none;
+  }
+
+  .nb-footer nav a:hover {
+    color: var(--sl-color-white);
+  }
+
+  .nb-footer-legal {
+    padding-top: 1rem;
+    margin-top: 1.5rem !important;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 40rem) {
+    .nb-footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .nb-footer-grid > div:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
