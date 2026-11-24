@@ -2,7 +2,7 @@
   "use strict";
 
   const REPO = "UCKETX/NEMCBridge";
-  const FALLBACK_TAG = "v1.5.5";
+  const FALLBACK_TAG = "v1.6.0";
   const releaseData = (() => {
     try { return JSON.parse(document.getElementById("release-data")?.textContent || "null"); }
     catch { return null; }

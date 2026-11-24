@@ -1,15 +1,15 @@
 ---
 title: 版本与下载
-description: NEMCBridge v1.5.5 下载与校验方法、关键版本变更脉络、历史版本差异和当前已知限制。
+description: NEMCBridge v1.6.0 下载与校验方法、关键版本变更脉络、历史版本差异和当前已知限制。
 ---
 
-本页汇总 `v1.5.5` 正式版下载与完整性校验方法、近期关键版本变化，以及交叉核对公开仓库、Release、旧 Wiki 与原文档站后整理的版本差异和待核项。
+本页汇总 `v1.6.0` 正式版下载与完整性校验方法、近期关键版本变化，以及交叉核对公开仓库、Release、旧 Wiki 与原文档站后整理的版本差异和待核项。
 
 ## 适用版本与下载地址
 
-- **当前公开正式版基准**：`v1.5.5`（发布日期：`2026-11-23`）
-- **官方下载页**：[GitHub Releases — v1.5.5](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.5.5) · [所有历史版本](https://github.com/UCKETX/NEMCBridge/releases)
-- **校验与签名目录**：[release-metadata/v1.5.5](https://github.com/UCKETX/NEMCBridge/tree/v1.5.5/release-metadata/v1.5.5)（每个压缩包均附带对应的 `.sha256` 与 `.sig` 文件）
+- **当前公开正式版基准**：`v1.6.0`（发布日期：`2026-11-25`）
+- **官方下载页**：[GitHub Releases — v1.6.0](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.6.0) · [所有历史版本](https://github.com/UCKETX/NEMCBridge/releases)
+- **校验与签名目录**：[release-metadata/v1.6.0](https://github.com/UCKETX/NEMCBridge/tree/v1.6.0/release-metadata/v1.6.0)（每个压缩包均附带对应的 `.sha256` 与 `.sig` 文件）
 
 ### 手动校验 SHA256 步骤
 
@@ -17,15 +17,15 @@ description: NEMCBridge v1.5.5 下载与校验方法、关键版本变更脉络�
 
 ```sh
 # Linux
-sha256sum -c NEMCBridge_v1.5.5_linux_amd64.tar.gz.sha256
+sha256sum -c NEMCBridge_v1.6.0_linux_amd64.tar.gz.sha256
 
 # macOS
-shasum -a 256 -c NEMCBridge_v1.5.5_macos_arm64.tar.gz.sha256
+shasum -a 256 -c NEMCBridge_v1.6.0_macos_arm64.tar.gz.sha256
 ```
 
 ```powershell
 # Windows (PowerShell)
-Get-FileHash .\NEMCBridge_v1.5.5_windows_amd64.zip -Algorithm SHA256
+Get-FileHash .\NEMCBridge_v1.6.0_windows_amd64.zip -Algorithm SHA256
 # 将输出与对应 .sha256 文件内容逐字符比对
 ```
 
@@ -37,7 +37,8 @@ Get-FileHash .\NEMCBridge_v1.5.5_windows_amd64.zip -Algorithm SHA256
 
 | 版本 | 日期 | 核心变化与升级注意点 |
 | --- | --- | --- |
-| **`v1.5.5`**（当前基准） | 2026-11-23 | 修复重进时的区块缓存兼容断线及 Geyser 暂停菜单重复显示自己；访客昵称默认由桥接直查网易（不需要手动开关；开房仍需兼容 FGAuth 的房间票据）；已开启 Beta 的房间默认启用轻量入口。明确不含单房选服。 |
+| **`v1.6.0`**（当前基准） | 2026-11-25 | 新增[选服大厅](../backends-and-gateway/#选服大厅)，更新控制台和日志，改进访客核验、转服身份和记分板兼容。安装包保留快速启动说明、示例配置及许可证。 |
+| `v1.5.5` | 2026-11-23 | 修复重进时的区块缓存兼容断线及 Geyser 暂停菜单重复显示自己；访客昵称默认由桥接直查网易（不需要手动开关；开房仍需兼容 FGAuth 的房间票据）；已开启 Beta 的房间默认启用轻量入口。明确不含单房选服。 |
 | `v1.5.4` | 2026-11-23 | 普通房与转服统一使用大厅核验身份并沿用 `v1.5.1` 存档 UUID 算法；修复区块缓存、附魔台、转服后箱子和床。**OP 权限交回各国际服后端管理**，不再从桥接名单补发；注明 Windows BDS `26.60` 原生 OP 仅当次会话生效。 |
 | `v1.5.3`（历史） | 2026-11-21 | 统一游戏内网易昵称显示；曾新增分服 OP 授权弹窗与托管 BDS 管道适配器（见下方历史区分）。 |
 | `v1.5.2` | 2026-11-21 | 优化区块缓存以修复边界卡顿/前冲；修复附魔台提示「出错了」；后端授权绑定大厅认证 UID。 |
@@ -57,17 +58,17 @@ Get-FileHash .\NEMCBridge_v1.5.5_windows_amd64.zip -Algorithm SHA256
 - [v1.5.4 发行说明](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.5.4)明确把 OP 交回游戏后端管理；核对 v1.5.5 的源码标签后，确认该版控制台没有分服 OP 授权弹窗，也未注册对应管理接口。
 - 在实际游戏后端授予权限。不要照旧文档部署托管管道，也不要按昵称批量迁移旧 OP。
 
-### 2. 未公开正式发布的功能
+### 2. 选服大厅与人数限制
 
-- **单房选服 / 选服大厅**：`v1.5.5` 更新日志明确写明「保留房间身份校验和固定 UDP 网关，**不含单房选服**」。在官方正式发布前，不作为正式版能力编写或承诺。
+- **选服大厅**：自 `v1.6.0` 正式提供；`v1.5.5` 不含此功能。
 - **超过 9 位访客同时在线**：自动转服（Beta）仅验证了原版手机转服与名额释放，尚未完成超过 9 位访客同时在线的实测。
 
 ## 版本冲突与待核清单
 
 | 项目 | 核对结论 |
 | --- | --- |
-| 首次登录 | 原项目站可能还显示历史步骤。正式 v1.5.5 使用终端显示的**一次性初始化码**，随后自行设置管理员用户名和密码。请按[快速开始](../quick-start/)操作。 |
-| 分服 OP | v1.5.3 的托管 BDS 指南是历史资料。v1.5.5 无桥接分服 OP 授权弹窗或对应接口，权限由游戏后端负责。 |
+| 首次登录 | 原项目站可能还显示历史步骤。正式 v1.6.0 使用终端显示的**一次性初始化码**，随后自行设置管理员用户名和密码。请按[快速开始](../quick-start/)操作。 |
+| 分服 OP | v1.5.3 的托管 BDS 指南是历史资料。v1.6.0 无桥接分服 OP 授权弹窗或对应接口，权限由游戏后端负责。 |
 | Windows BDS 26.60 原生 OP 持久化 | [v1.5.4](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.5.4) 的 Windows 实测只确认了背包重启后保留；当时原生 OP 未持久化。v1.5.5 没有宣布该能力，也没有新的实测证明。不要把这项写成已修复，也不要据此推断其他平台。 |
 | 历史发行说明 | 直接使用 [v1.5.4 Release](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.5.4) 和 [v1.5.5 Release](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.5.5)，不走旧标签内失效的相对链接。 |
 | FGAuth | [按功能核对](../accounts-and-rooms/#fgauth-鉴权与信任机制)：开房需要安全验证与房间票据，私信和账号资料各有独立条件。默认直查网易不等于可以用不能签发房间票据的验证服。 |

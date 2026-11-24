@@ -7,7 +7,7 @@ description: 在同机 Bedrock Dedicated Server 上跑通第一个 NEMCBridge �
 
 ## 适用版本与前置条件
 
-- **适用版本**：NEMCBridge `v1.5.5`（网易客户端基线 `3.10.5.301327`，房间内核 `1.21.130.0`，游戏协议 `898`）。
+- **适用版本**：NEMCBridge `v1.6.0`（网易客户端基线 `3.10.5.301327`，房间内核 `1.21.130.0`，游戏协议 `898`）。
 - **推荐起步后端**：官方 BDS `1.21.130.4`（协议 `898`）。如果你使用 `26.x`、`NetherNet` 或 `Geyser`，先查看 [资源包与兼容性](../resource-packs-and-compatibility/) 与 [国际服与转服网关](../backends-and-gateway/)。
 - **必备资源**：
   1. 可正常启动的 Bedrock 服务器及世界存档（自行准备）。

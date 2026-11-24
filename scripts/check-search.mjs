@@ -37,7 +37,7 @@ if (fragmentFiles.length === 0) {
 // Decode fragments (Pagefind strips the "pagefind_dcd" signature or gzips JSON; let's inspect raw/gunzipped content)
 // Note: Pagefind fragments are gzipped with a custom header in v1.x, or we can verify via the index chunks + HTML data-pagefind-body.
 // Even better: check index/ and pagefind.js exist and verify required Chinese terms appear in indexed pages (data-pagefind-body).
-const requiredTerms = ['转服', '资源包', '快速开始', '日志', 'Geyser', 'v1.5.5'];
+const requiredTerms = ['转服', '资源包', '快速开始', '日志', 'Geyser', 'v1.6.0', '选服大厅'];
 const distDir = path.resolve('dist');
 
 function walkHtml(dir) {

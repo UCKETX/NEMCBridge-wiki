@@ -7,7 +7,7 @@ description: 平台安装包选择、命令行启动参数、数据目录备份�
 
 ## 适用版本与前置条件
 
-- **适用版本**：NEMCBridge `v1.5.5`（支持 Windows / Linux / macOS 的 `amd64` 与 `arm64`）。
+- **适用版本**：NEMCBridge `v1.6.0`（支持 Windows / Linux / macOS 的 `amd64` 与 `arm64`）。
 - **前置条件**：
   - 对数据目录有读写权限。
   - 若在公网服务器部署，需提前配置防火墙，阻断外部直接访问 `18321` 端口。
