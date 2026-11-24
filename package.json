@@ -1,0 +1,22 @@
+{
+  "name": "nemcbridge-wiki",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NEMCBridge 中文 Wiki（Astro Starlight 静态站）",
+  "scripts": {
+    "dev": "astro dev --port 28405",
+    "start": "astro dev --port 28405",
+    "build": "astro build",
+    "preview": "astro preview --port 28405",
+    "check:search": "node scripts/check-search.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "verify": "npm run build && npm run check:links && npm run check:search",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.43.1",
+    "astro": "^7.4.13",
+    "sharp": "^0.35.5"
+  }
+}
