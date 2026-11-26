@@ -1,16 +1,16 @@
 ---
 import { withBase } from '../lib/site-path.mjs';
-// 官网首页：沿用原官网（ucketx.github.io/NEMCBridge）的视觉与结构，内容按公开正式版 v1.6.0 核对。
-const version = 'v1.6.0';
+// 官网首页：沿用原官网（ucketx.github.io/NEMCBridge）的视觉与结构，内容按公开正式版 v1.6.1 核对。
+const version = 'v1.6.1';
 const releaseUrl = `https://github.com/UCKETX/NEMCBridge/releases/tag/${version}`;
 const metadataUrl = `https://github.com/UCKETX/NEMCBridge/tree/${version}/release-metadata/${version}`;
 // 嵌入发布信息，页面不依赖访客实时请求 GitHub API；下载地址按官方 Releases 资产命名规则生成。
 const releaseData = {
   latest: {
     tag_name: version,
-    name: 'NEMCBridge v1.6.0 · 选服大厅与进房体验优化',
+    name: 'NEMCBridge v1.6.1 · 多平台通知推送、QQ 群公告与玩家真实 IP 透传',
     html_url: releaseUrl,
-    published_at: '2026-11-24T18:56:42Z',
+    published_at: '2026-11-26T10:35:00Z',
     body: '',
     assets: null,
   },
@@ -83,7 +83,7 @@ const downloads = [
         <div class="wrap hero-inner">
           <a class="release-pill" href={releaseUrl} target="_blank" rel="noopener" data-reveal>
             <span class="pill-tag">NEW</span>
-            <span data-release-label>{version} 已发布 · 选服大厅与进房体验优化</span>
+            <span data-release-label>{version} 已发布 · 多平台通知推送、QQ 群公告与真实 IP 透传</span>
             <span aria-hidden="true">→</span>
           </a>
           <h1 data-reveal>

@@ -1,6 +1,6 @@
 ---
 title: NEMCBridge 中文文档
-description: 面向服主的 NEMCBridge 中文操作手册，以公开正式版 v1.6.0 为基准，按运维任务组织。
+description: 面向服主的 NEMCBridge 中文操作手册，以公开正式版 v1.6.1 为基准，按运维任务组织。
 tableOfContents: false
 prev: false
 next:
@@ -10,11 +10,11 @@ next:
 
 NEMCBridge 通过 FGAuth 登录房主机器人，创建网易《我的世界》「本地联机」房间，并将玩家连接转发到你已有的 Bedrock 服务器（BDS、Geyser 等），让网易端玩家与国际版 Bedrock 玩家进入同一个世界。程序本身不提供游戏服务端、地图存档或机器人账号。
 
-> **当前文档基准：公开正式版 `v1.6.0`（2026-11-25）**，并同步收录预发布版 `v1.6.1-beta.1`（2026-11-26）的[玩家真实 IP 透传与 PROXY Protocol v2](./backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2v161-beta1)；历史版本行为会标注具体版本号。
+> **当前文档基准：公开正式版 `v1.6.1`（2026-11-26）**，涵盖[多平台通知推送与 QQ 群公告](./notifications/)及[玩家真实 IP 透传与 PROXY Protocol v2](./backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2)；历史版本行为会标注具体版本号。
 
 <div class="nb-cta-row">
   <a class="nb-cta nb-cta-primary" href="./quick-start/">从快速开始入手 →</a>
-  <a class="nb-cta" href="../#download">下载 v1.6.0</a>
+  <a class="nb-cta" href="../#download">下载 v1.6.1</a>
 </div>
 
 ## 按任务查找文档
@@ -49,24 +49,31 @@ NEMCBridge 通过 FGAuth 登录房主机器人，创建网易《我的世界》�
     </a>
   </li>
   <li>
-    <a class="task-card" href="./resource-packs-and-compatibility/">
+    <a class="task-card" href="./notifications/">
       <em>05</em>
+      <strong>通知推送与 QQ 群公告</strong>
+      <span>8 大平台 Webhook 通知、选服大厅去重、QQ 群公告实时更新与按事件自定义模板。</span>
+    </a>
+  </li>
+  <li>
+    <a class="task-card" href="./resource-packs-and-compatibility/">
+      <em>06</em>
       <strong>资源包与兼容性</strong>
       <span>自动外观兼容包、服务器自制材质、4D 皮肤、11 档 BDS 协议表及 Geyser 等服务端范围。</span>
     </a>
   </li>
   <li>
     <a class="task-card" href="./troubleshooting-and-logs/">
-      <em>06</em>
+      <em>07</em>
       <strong>常见故障与日志</strong>
       <span>按故障现象快速排查、Debug 日志开关、日志文件位置与脱敏反馈清单。</span>
     </a>
   </li>
   <li>
     <a class="task-card" href="./releases-and-downloads/">
-      <em>07</em>
+      <em>08</em>
       <strong>版本与下载</strong>
-      <span>v1.6.0 下载与 SHA256 / Ed25519 校验、版本变更脉络、旧文档冲突与待核清单。</span>
+      <span>v1.6.1 下载与 SHA256 / Ed25519 校验、版本变更脉络、旧文档冲突与待核清单。</span>
     </a>
   </li>
 </ul>
@@ -83,7 +90,7 @@ NEMCBridge 通过 FGAuth 登录房主机器人，创建网易《我的世界》�
 
 本站内容交叉核对自以下公开仓库与发布信息：
 
-- 公开仓库与文档：[github.com/UCKETX/NEMCBridge](https://github.com/UCKETX/NEMCBridge)（基准标签 `v1.6.0`）
+- 公开仓库与文档：[github.com/UCKETX/NEMCBridge](https://github.com/UCKETX/NEMCBridge)（基准标签 `v1.6.1`）
 - 公开 Release 列表：[GitHub Releases](https://github.com/UCKETX/NEMCBridge/releases)
 - 旧版 GitHub Wiki：[NEMCBridge Wiki](https://github.com/UCKETX/NEMCBridge/wiki)
-- 原项目文档页：[ucketx.github.io/NEMCBridge/docs.html](https://ucketx.github.io/NEMCBridge/docs.html)（注：部分内容停留在 `v1.4.1`，与 `v1.6.0` 的差异见 [版本与下载](./releases-and-downloads/)）
+- 原项目文档页：[ucketx.github.io/NEMCBridge/docs.html](https://ucketx.github.io/NEMCBridge/docs.html)（注：部分内容停留在 `v1.4.1`，与 `v1.6.1` 的差异见 [版本与下载](./releases-and-downloads/)）

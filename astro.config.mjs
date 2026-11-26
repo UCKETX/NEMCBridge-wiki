@@ -7,7 +7,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'NEMCBridge 文档',
-      description: 'NEMCBridge 中文运维与使用文档（正式版 v1.6.0，含 v1.6.1-beta.1 预发布说明）',
+      description: 'NEMCBridge 中文运维与使用文档（正式版 v1.6.1）',
       defaultLocale: 'root',
       locales: {
         root: {
@@ -50,6 +50,7 @@ export default defineConfig({
           items: [
             { label: '网易账号和开房', slug: 'wiki/accounts-and-rooms' },
             { label: '国际服与转服网关', slug: 'wiki/backends-and-gateway' },
+            { label: '通知推送与 QQ 群公告', slug: 'wiki/notifications' },
             { label: '资源包与兼容性', slug: 'wiki/resource-packs-and-compatibility' },
           ],
         },
