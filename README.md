@@ -11,8 +11,8 @@
 
 ## 站点地址
 
-- [NEMCBridge 官网](https://ucketx.github.io/NEMCBridge-wiki/)
-- [NEMCBridge 中文 Wiki](https://ucketx.github.io/NEMCBridge-wiki/wiki/)
+- [NEMCBridge 官网](https://nemcbridge.ucket.top/)
+- [NEMCBridge 中文 Wiki](https://nemcbridge.ucket.top/wiki/)
 
 推送到 `main` 后，GitHub Actions 构建、校验并将官网与文档一起部署到 GitHub Pages。发布流程从 Pages 配置读取站点地址与子路径；本地开发仍从 `/` 开始。
 
