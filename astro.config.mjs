@@ -7,7 +7,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'NEMCBridge 文档',
-      description: 'NEMCBridge 中文运维与使用文档（以公开正式版 v1.5.5 为基准）',
+      description: 'NEMCBridge 中文运维与使用文档（正式版 v1.6.0，含 v1.6.1-beta.1 预发布说明）',
       defaultLocale: 'root',
       locales: {
         root: {

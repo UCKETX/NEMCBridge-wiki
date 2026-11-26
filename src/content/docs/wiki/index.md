@@ -10,7 +10,7 @@ next:
 
 NEMCBridge 通过 FGAuth 登录房主机器人，创建网易《我的世界》「本地联机」房间，并将玩家连接转发到你已有的 Bedrock 服务器（BDS、Geyser 等），让网易端玩家与国际版 Bedrock 玩家进入同一个世界。程序本身不提供游戏服务端、地图存档或机器人账号。
 
-> **当前文档基准：公开正式版 `v1.6.0`（2026-11-25，北京时间）**。本版新增[选服大厅](./backends-and-gateway/#选服大厅)，历史版本行为会标注具体版本号。
+> **当前文档基准：公开正式版 `v1.6.0`（2026-11-25）**，并同步收录预发布版 `v1.6.1-beta.1`（2026-11-26）的[玩家真实 IP 透传与 PROXY Protocol v2](./backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2v161-beta1)；历史版本行为会标注具体版本号。
 
 <div class="nb-cta-row">
   <a class="nb-cta nb-cta-primary" href="./quick-start/">从快速开始入手 →</a>
@@ -45,7 +45,7 @@ NEMCBridge 通过 FGAuth 登录房主机器人，创建网易《我的世界》�
     <a class="task-card" href="./backends-and-gateway/">
       <em>04</em>
       <strong>国际服与转服网关</strong>
-      <span>RakNet / NetherNet 后端地址写法、「突破10人限制（Beta）」公网 UDP 网关与轻量入口配置。</span>
+      <span>RakNet / NetherNet 后端地址、公网 UDP 网关、选服大厅、玩家真实 IP 透传与 PROXY Protocol v2。</span>
     </a>
   </li>
   <li>

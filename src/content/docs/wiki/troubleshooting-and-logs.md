@@ -23,13 +23,15 @@ description: 按现象快速定位 NEMCBridge 开房、进服、转服、网络�
 | macOS 开启 VPN 后卡在 `ICE Checking` | 先在无 VPN 的可信网络对照。确认物理网卡 UDP 可用时，可单次指定 `NEMCBRIDGE_ICE_INTERFACE=en0`（按实际网卡名替换）启动；该变量只绑定 WebRTC 接口，不修改系统路由。 | — |
 | FGAuth 公钥变化，程序拒绝连接 | 通过可信渠道向验证站管理员核实公钥是否合法变更或迁移；**不要盲删 `auth-trust/`**。 | [网易账号和开房](../accounts-and-rooms/#fgauth-鉴权与信任机制) |
 | 访客昵称直查异常 | 网络故障会自动回退到 FGAuth 核验；若日志显示网易拒绝或核验失败，核对房主会话和 FGAuth 的房间票据。不要同时让两套验证站登录同一账号。 | [网易账号和开房](../accounts-and-rooms/#访客身份昵称核验与-op-权限v160-行为) |
+| 开启 PROXY Protocol v2 后控制台显示服务器离线 | 确认后端本身支持 UDP PROXY Protocol v2（原版 BDS 不支持），且 Geyser 的 `advanced.bedrock.use-haproxy-protocol` 已设为 `true` 并已 `/geyser reload`；若配置了白名单，确认其中包含 NEMCBridge 所在主机 IP。 | [国际服与转服网关](../backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2v161-beta1) |
+| Geyser 提示「数据流终止」断开与 Java 服务器连接 | 检查 Geyser `config.yml` 中是否误把 `advanced.java.use-haproxy-protocol` 也改成了 `true`。Geyser-Spigot 插件版在 `use-direct-connection: true` 下应保持 `advanced.java.use-haproxy-protocol: false`，仅开启 `advanced.bedrock` 下的开关。 | [国际服与转服网关](../backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2v161-beta1) |
 
 ## 查看日志与临时开启 Debug
 
 ### 日志位置与归类
 
 - **控制台「运行日志」**：支持按房间、来源和级别筛选、搜索、复制或下载。反馈前请先脱敏。
-- **磁盘日志路径**：数据目录下的 `logs/keeper.log` 与 `logs/status.json`。日志按 10 MiB 轮转，保留最多 5 份旧日志。
+- **磁盘日志路径**：数据目录下的 `logs/keeper.log`、`logs/status.json` 与 `logs/player_ips.json`（`v1.6.1-beta.1+` 玩家 IP 映射，权限 `0600`）。运行日志按 10 MiB 轮转，保留最多 5 份旧日志。
 
 ### 开启与关闭 Debug 模式
 

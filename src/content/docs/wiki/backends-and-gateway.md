@@ -63,6 +63,55 @@ description: 国际服后端 RakNet / NetherNet 地址格式，以及「突破10
 
 选服大厅自己使用转服网关，目标服**无需单独打开**「突破 10 人限制（Beta）」。确认在线的目标显示绿色粗体；离线目标显示红色粗体和「离线」，选中不会转服；尚未探测的目标保持默认样式。取消或等待超时退出入口，不会自动进入默认服。
 
+## 玩家真实 IP 透传与 PROXY Protocol v2（v1.6.1-beta.1）
+
+NEMCBridge 运行在本机或内网时，后端默认看到的底层 UDP 源地址是 `127.0.0.1` 或桥接主机 IP。从 `v1.6.1-beta.1` 起，当 WebRTC 建立直连（`host` / `srflx` / `prflx` 候选）或玩家直连公网 UDP 网关时，NEMCBridge 自动通过多种方式向后端提供真实对端地址：
+
+### 1. 默认自动透传（无需配置，全后端通用）
+
+1. **登录 `ClientData` 字段**：向后端发送的 `Login` `ClientData` JWT 自动写入 `ClientIP`（字符串，如 `"203.0.113.42"`）与 `ClientPort`（端口整数），并先清除客户端可能自带的同名字段防止伪造，覆盖协议 `859–2225`。
+2. **结构化 JSON 文件**：在登录包发往后端前，原子写入数据目录下的 `logs/player_ips.json`（权限 `0600`），格式为 `{玩家名: {ip, port, time, uid, uuid, xuid, source, server, online}}`；后端插件在登录事件中即可直接读取，无竞态。
+3. **运行日志**：在 `logs/keeper.log` 与控制台日志记录 `玩家 <名称> 来自 <IP>:<端口>`。
+
+### 2. UDP HAProxy PROXY Protocol v2（按国际服可选开启）
+
+如果后端原生支持 UDP 代理协议（例如 **Geyser**、**WaterdogPE** 或支持 PPv2 的 **Nukkit-MOT**），可在控制台「国际服 → 编辑」勾选 **PROXY Protocol v2（透传真实 IP）**（配置项 `proxy_protocol: true`，修改前需先停掉使用该服的房间），让后端日志和现有插件（如 `/ban-ip`、AuthMe、LiteBans）**无需修改插件代码**直接读取真实 IP。
+
+以 **Geyser-Spigot（Paper / Purpur）** 为例，修改 `plugins/Geyser-Spigot/config.yml`：
+
+```yaml
+advanced:
+  java:
+    # Geyser-Spigot 插件版同进程直连（use-direct-connection: true）时必须保持 false！
+    use-haproxy-protocol: false
+    use-direct-connection: true
+  bedrock:
+    use-haproxy-protocol: true
+    # 填写 NEMCBridge 所在主机 IP 或网段，防止伪造 PROXY 头并避免同源触发 RakNet 限流
+    haproxy-protocol-whitelisted-ips:
+      - "127.0.0.1"
+      - "192.168.31.102"
+```
+
+保存后在服务端执行 `/geyser reload` 或重启即可生效。
+
+### 各服务端适用方式对照
+
+| 服务端 | PROXY Protocol v2 开关 | 推荐获取方式 |
+| --- | --- | --- |
+| **Geyser（Paper / Purpur 等）** | 支持（建议按需开启） | 开启 `proxy_protocol` + Geyser `advanced.bedrock.use-haproxy-protocol: true` |
+| **WaterdogPE / 支持 PPv2 的 Nukkit-MOT** | 支持 | 开启 `proxy_protocol` 并同步启用后端 PPv2 |
+| **原版 BDS** | **不支持（请勿开启）** | 外置脚本／面板读取 `logs/player_ips.json` 或 `logs/keeper.log` |
+| **LeviLamina / Endstone / PMMP / PNX / Nukkit / Allay / Dragonfly** | 原生不支持 | 插件读取登录 `ClientData` 的 `ClientIP` / `ClientPort`（或 `logs/player_ips.json`） |
+
+### 安全与网络边界
+
+- **不支持 NetherNet 地址**：`proxy_protocol` 仅支持 UDP/RakNet 后端，不能与 `http://`（BDS 26.60 NetherNet）同时开启。
+- **Geyser 同端口直连限制**：Geyser 开启 `advanced.bedrock.use-haproxy-protocol: true` 后，该 UDP 端口只接收带 PROXY 头的连接，未经代理直连该端口的国际版客户端会被丢弃。
+- **跨协议族支持**：IPv6 玩家连入 IPv4 后端时，PROXY Protocol v2 自动按 `UDP6`（目标为 IPv4 映射地址）编码。
+- **自动转服与 FRP 穿透**：若公网 UDP 网关收到的是回环或内网穿透地址（如 `127.0.0.1`），会自动回退保留入口阶段 WebRTC 获取的玩家真实地址。
+- **远程 TURN 中继保护**：若玩家经远程 TURN 中继建连，NEMCBridge **不会**把 TURN 服务器 IP 或未经传输验证的信令候选当作 `ClientIP`，避免 IPBan 误封中继节点；此时 `ClientData` 不含 `ClientIP`，`logs/player_ips.json` 中 `ip` 为空且 `source` 为 `"webrtc-relay"`。
+
 ## 限制与回退
 
 - **尚未实测超过 9 位访客同时在线**：原版网易手机的自动转服与大厅名额释放已验证，但公开版本**尚未完成超过 9 位访客同时在线的实测，不承诺无限人数**。默认每房间 `128` 个交接/在线会话仅是保护上限，不是实测容量；实际承载力取决于后端、带宽和机器性能。

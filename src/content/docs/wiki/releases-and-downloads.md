@@ -8,6 +8,7 @@ description: NEMCBridge v1.6.0 下载与校验方法、关键版本变更脉络�
 ## 适用版本与下载地址
 
 - **当前公开正式版基准**：`v1.6.0`（发布日期：`2026-11-25`）
+- **最新预发布测试版**：[`v1.6.1-beta.1`](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.6.1-beta.1)（2026-11-26，含玩家真实 IP 透传与可选 UDP PROXY Protocol v2；一键更新默认跳过预发布版，需手动下载体验）
 - **官方下载页**：[GitHub Releases — v1.6.0](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.6.0) · [所有历史版本](https://github.com/UCKETX/NEMCBridge/releases)
 - **校验与签名目录**：[release-metadata/v1.6.0](https://github.com/UCKETX/NEMCBridge/tree/v1.6.0/release-metadata/v1.6.0)（每个压缩包均附带对应的 `.sha256` 与 `.sig` 文件）
 
@@ -37,7 +38,8 @@ Get-FileHash .\NEMCBridge_v1.6.0_windows_amd64.zip -Algorithm SHA256
 
 | 版本 | 日期 | 核心变化与升级注意点 |
 | --- | --- | --- |
-| **`v1.6.0`**（当前基准） | 2026-11-25 | 新增[选服大厅](../backends-and-gateway/#选服大厅)，更新控制台和日志，改进访客核验、转服身份和记分板兼容。安装包保留快速启动说明、示例配置及许可证。 |
+| [`v1.6.1-beta.1`](https://github.com/UCKETX/NEMCBridge/releases/tag/v1.6.1-beta.1)（预发布） | 2026-11-26 | 新增[玩家真实 IP 透传与按服可选 UDP PROXY Protocol v2](../backends-and-gateway/#玩家真实-ip-透传与-proxy-protocol-v2v161-beta1)（`ClientData.ClientIP/ClientPort`、`logs/player_ips.json`、运行日志及 Geyser 代理协议适配）；官网与控制台链接切换至 `nemcbridge.ucket.top`。预发布版不通过一键更新自动推送。 |
+| **`v1.6.0`**（正式版基准） | 2026-11-25 | 新增[选服大厅](../backends-and-gateway/#选服大厅)，更新控制台和日志，改进访客核验、转服身份和记分板兼容。安装包保留快速启动说明、示例配置及许可证。 |
 | `v1.5.5` | 2026-11-23 | 修复重进时的区块缓存兼容断线及 Geyser 暂停菜单重复显示自己；访客昵称默认由桥接直查网易（不需要手动开关；开房仍需兼容 FGAuth 的房间票据）；已开启 Beta 的房间默认启用轻量入口。明确不含单房选服。 |
 | `v1.5.4` | 2026-11-23 | 普通房与转服统一使用大厅核验身份并沿用 `v1.5.1` 存档 UUID 算法；修复区块缓存、附魔台、转服后箱子和床。**OP 权限交回各国际服后端管理**，不再从桥接名单补发；注明 Windows BDS `26.60` 原生 OP 仅当次会话生效。 |
 | `v1.5.3`（历史） | 2026-11-21 | 统一游戏内网易昵称显示；曾新增分服 OP 授权弹窗与托管 BDS 管道适配器（见下方历史区分）。 |
